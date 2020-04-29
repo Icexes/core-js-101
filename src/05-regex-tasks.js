@@ -79,7 +79,6 @@ function getRegexForPitSpot() {
  *   'Pa55'.match(validator) => false
  */
 function getPasswordValidator(minLength) {
-  // eslint-disable-next-line no-useless-escape
   return new RegExp(`^((?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{${minLength},})$`);
 }
 
