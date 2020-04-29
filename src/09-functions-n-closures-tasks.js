@@ -23,8 +23,8 @@
  *   getComposition(Math.sin, Math.asin)(x) => Math.sin(Math.asin(x))
  *
  */
-function getComposition(/* f, g */) {
-  throw new Error('Not implemented');
+function getComposition(f, g) {
+  return (x) => f(g(x));
 }
 
 
@@ -45,8 +45,7 @@ function getComposition(/* f, g */) {
  *
  */
 function getPowerFunction(exponent) {
-  const pow = exponent;
-  return (val) => val ** pow;
+  return (val) => val ** exponent;
 }
 
 
@@ -130,8 +129,14 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
+function logger(func, logFunc) {
+  return (...val) => {
+    const valForConsole = val.map((el) => JSON.stringify(el));
+    logFunc(`${func.name}(${valForConsole}) starts`);
+    const res = func(...val);
+    logFunc(`${func.name}(${valForConsole}) ends`);
+    return res;
+  };
 }
 
 
@@ -148,10 +153,10 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
-}
 
+function partialUsingArguments(fn, ...args1) {
+  return (...args2) => fn(...args1, ...args2);
+}
 
 /**
  * Returns the id generator function that returns next integer starting
@@ -170,8 +175,12 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  let res = startFrom - 1;
+  return () => {
+    res += 1;
+    return res;
+  };
 }
 
 
